@@ -1,59 +1,69 @@
-
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useContext } from "react";
 import { useAuth } from "../contexts/AuthContextProvider";
-// import "../styles/registerLogin.css";
+import IconButton from "@mui/material/IconButton";
+
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
+
+import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
 
 const RegistrationPage = () => {
   const { handleRegister, error, setError } = useAuth();
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
   const [passConfirm, setPassConfirm] = useState("");
+  const [secretWord, setSecretWord] = useState("")
   // const [executor, setExecutor] = useState("");
 
-  const { handleRegister } = useAuth();
+  // const { handleRegister } = useAuth();
 
-  // let newObj = {
-  //   first_name: name,
-  //   last_name: lastName,
-  //   email: email,
-  //   password: pass,
-  //   password2: passConfirm,
-  // };
+  
   function handleSave() {
     if (
       !name.trim() ||
       !lastName.trim() ||
-      !email.trim() ||
+      !username.trim() ||
       !pass.trim() ||
-      !passConfirm.trim() ||
-      !phone.trim()
-    ) {
+      !passConfirm.trim() || 
+      !secretWord.trim()
+      )
+      {
       alert("Some inputs are empty!");
     } else {
       console.log("HELLO", passConfirm);
       let formData = new FormData();
-      formData.append("first_name", name);
+      formData.append("name", name);
       formData.append("last_name", lastName);
-      formData.append("email", email);
+      formData.append("username", username);
       formData.append("password", pass);
       formData.append("password2", passConfirm);
+      formData.append("secret_word", secretWord)
 
       console.log(formData);
       handleRegister(formData, navigate);
     }
   }
-  function handleRegister(){
-    register(newObj)
-    setName('')
-    setLastName('')
-    setEmail('')
-    setPass('')
-    setPassConfirm('')
-
+  function cleanRegister() {
+    setName("");
+    setLastName("");
+    setUsername("");
+    setPass("");
+    setPassConfirm("");
+    secretWord("")
   }
 
   useEffect(() => {
@@ -136,20 +146,20 @@ const RegistrationPage = () => {
           <TextField
             sx={{ marginBottom: "10px", width: "50%" }}
             id="outlined-textarea"
-            label="Почта"
+            label="Логин"
             placeholder="Placeholder"
             multiline
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
           <TextField
             sx={{ marginBottom: "10px", width: "50%" }}
             id="outlined-textarea"
-            label="Номер"
-            placeholder="Placeholder"
+            label="Секретное слово"
+            placeholder="you're secret word"
             multiline
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            value={secretWord}
+            onChange={(e) => setSecretWord(e.target.value)}
           />
 
           <FormControl sx={{ m: 1, width: "50%" }} variant="outlined">
@@ -201,45 +211,21 @@ const RegistrationPage = () => {
             />
           </FormControl>
 
-          <div className="input__wrapper">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setImage(e.target.files[0])}
-            />
-          </div>
+          
 
-          <FormControl className="register_executor_main">
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="female"
-              name="radio-buttons-group"
-              onChange={(e) => setExecutor(e.target.value)}
-              className="register_executor"
-            >
-              <FormControlLabel
-                value="1"
-                control={<Radio />}
-                label="Пользователь"
-                className="register_executor_label"
-              />
-              <FormControlLabel
-                value="2"
-                control={<Radio />}
-                label="Исполнитель"
-                className="register_executor_label"
-              />
-            </RadioGroup>
-          </FormControl>
 
           <button className="custom-btn btn-4" onClick={handleSave}>
             <span>Подтвердить</span>
           </button>
-          <div onClick={()=>navigate('/login')}> Вы уже зарегистрированы?</div>
-          <div onClick={()=>navigate('/')}> Вернуться на главную страницу</div>
+          <div onClick={() => navigate("/login")}>
+            {" "}
+            Вы уже зарегистрированы?
+          </div>
+          <div onClick={() => navigate("/")}>
+            {" "}
+            Вернуться на главную страницу
+          </div>
         </div>
-
-
       </div>
     </>
   );

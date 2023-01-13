@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from "react-router-dom";
 import RegistrationPage from "./pages/RegistrationPage";
 import HomePage from "./pages/HomePage"
+import LoginPage from './pages/LoginPage';
 
 
 const MainRoutes = () => {
@@ -15,7 +16,12 @@ const MainRoutes = () => {
             link: "/register",
             element: <RegistrationPage />,
             id:2
-        }
+        },
+        {
+          link: "/login",
+          element: <LoginPage />,
+          id:2
+      }
     ]
   return (
     <Routes>

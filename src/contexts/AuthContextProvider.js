@@ -16,7 +16,6 @@ const AuthContextProvider = ({ children }) => {
     try {
       const res = await axios.post(`${API}/accounts/register/`, formData);
       console.log(res);
-      alert("Мы отправили уведомление на почту. Подтвердите аккунт");
       navigate("/login");
     } catch (err) {
       console.log("ERROR", err);
@@ -27,14 +26,14 @@ const AuthContextProvider = ({ children }) => {
     }
   }
 
-  async function handleLogin(formData, email, navigate) {
+  async function handleLogin(formData, username, navigate) {
     setLoading(true);
     try {
       const res = await axios.post(`${API}/accounts/login/`, formData);
       localStorage.setItem("tokens", JSON.stringify(res.data));
-      localStorage.setItem("email", email);
+      localStorage.setItem("username", username);
       // localStorage.setItem("user_state", executor);
-      setCurrentUser(email);
+      setCurrentUser(username);
       navigate("/");
       console.log(res);
     } catch (err) {
@@ -48,7 +47,7 @@ const AuthContextProvider = ({ children }) => {
 
   function handleLogout(navigate) {
     localStorage.removeItem("tokens");
-    localStorage.removeItem("email");
+    localStorage.removeItem("username");
     setCurrentUser(false);
     navigate("/");
   }
@@ -59,7 +58,6 @@ const AuthContextProvider = ({ children }) => {
         currentUser,
         error,
         loading,
-
         setError,
         handleRegister,
         handleLogin,
